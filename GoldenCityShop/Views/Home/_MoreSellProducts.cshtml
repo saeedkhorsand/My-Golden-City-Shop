@@ -1,0 +1,93 @@
+﻿@using DomainClasses.Enums
+@using GoldenCityShop.Helpers
+@model IEnumerable<ViewModel.Admin.Product.ProductSectionViewModel>
+<section id="products-most-sell">
+    <div class="panel panel-default">
+        <header class="panel-heading">
+            <span class="bdred">
+                <strong>
+                    محصولات پرفروش
+                </strong>
+            </span>
+        </header>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-4">
+                            <div class="product-item imganimate thumbnail teaser lazyload" data-expand="-80">
+                                <figure class="" >
+                                    <a href="@Url.Action(MVC.Product.ActionNames.Index,MVC.Product.Name,new{id=item.Id,name=item.Name.GenerateSlug()})" class="thumbnail ">
+                                        <img src="@item.PrincipleImagePath?w=220&h=180&mode=crop" class="lazyload"  alt="@item.Name">
+                                    </a>
+                                    @*@if (item.TotalDiscount > 0)
+                                    {
+                                        <span class="prod-top-2 label  label-danger">@item.TotalDiscount% تخفیف</span>
+                                    }
+                                    @if (item.IsFreeShipping)
+                                    {
+
+                                        <span class="prod-top label  label-primary">ارسال رایگان</span>
+                                    }*@
+
+                                </figure>
+                                <span class="name">
+                                    <a href="@Url.Action(MVC.Product.ActionNames.Index,MVC.Product.Name,new{id=item.Id,name=item.Name.GenerateSlug()})" data-toggle="tooltip" data-placement="bottom" title="مشاهده جزئیات محصول">
+                                        @item.Name
+                                    </a>
+                                </span>
+                                <div class="price">
+                                    <span>
+
+                                        <strong>
+                                            @Html.DisplayFor(a => item.Price) تومان
+                                        </strong>
+
+                                    </span>
+
+                                </div>
+                                <div class="footer-prod clearfix">
+                                 
+                                    <input class="rating" id="rate-@item.Id" data-show-clear="false" data-show-caption="false" value="@item.AvrageRate" data-size="xs">
+
+                                    <div class="btns btn-group">
+                                        <button class="btn btn-xs btn-primary" id="toCompare-@item.Id"
+                                                data-toggle="tooltip"
+                                                title="+ لیست مقایسه">
+                                            <i class="glyphicon glyphicon-refresh"></i>
+                                        </button>
+                                        <button class="btn btn-xs btn-primary" id="toWish-@item.Id"
+                                                data-toggle="tooltip"
+                                                title="+ لیست مورد علاقه">
+                                            <i class="glyphicon glyphicon-heart"></i>
+                                        </button>
+                                        <button class="btn btn-xs btn-success" id="toCart-@item.Id"
+                                                data-toggle="tooltip"
+                                                title="+ سبد خرید">
+                                            <i class="glyphicon glyphicon-shopping-cart"></i>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+
+            </div>
+        </div>
+        <footer class="panel-footer">
+            <i class="glyphicon glyphicon-th-list"></i>
+            <a href="@Url.Action(MVC.Search.ActionNames.Index, MVC.Search.Name, new { categoryId = 0, filter =PSFilter.MoreSell })">
+                <strong>
+                    ادامه محصولات
+                </strong>
+            </a>
+        </footer>
+    </div>
+</section>
+
+

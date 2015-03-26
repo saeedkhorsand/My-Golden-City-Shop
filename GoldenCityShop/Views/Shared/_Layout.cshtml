@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    @*@Html.Action(MVC.MetaTag.ActionNames.Index, MVC.MetaTag.Name, new { title = ViewBag.Title, keywords = ViewBag.Keywords, description = ViewBag.Description })
+        <link rel="canonical" href="@ViewBag.CanonicalUrl" />
+        <meta http-equiv="Content-Language" content="fa" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        @RenderSection("metatags", false)
+        <link rel="shortcut icon" href="@Links.Content.fav.iefavicon_ico" type="image/x-icon">
+        <link rel="shortcut icon" href="@Links.Content.Images.fav.favicon_ico" type="image/x-icon">
+        <link rel="apple-touch-icon" href="@Links.Content.Images.fav.apple_touch_icon_iphone_png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="@Links.Content.Images.fav.apple_touch_icon_ipad_png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="@Links.Content.Images.fav.apple_touch_icon_iphone4_png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="@Links.Content.Images.fav.apple_touch_icon_ipad3_png" />
+        <link title="فید محصولات جدید سایت" href="@Url.Action(MVC.Feed.ActionNames.Product, MVC.Feed.Name)" type="application/rss+xml" rel="alternate" />*@
+
+    <noscript>
+        <meta http-equiv="refresh" content="0;url=http://www.google.com">
+    </noscript>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Search/css")
+    @RenderSection("css", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/masterjs")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/customerBundle/js")
+
+</head>
+<body id="body">
+    <div id="wrapper">
+        <header id="masterHeader">
+            @{ Html.RenderAction(MVC.Home.ActionNames.NavBar, MVC.Home.Name);}
+            @{ Html.RenderAction(MVC.Home.ActionNames.Menu, MVC.Home.Name);}
+        </header>
+        <div id="content" class="body-content">
+            @RenderBody()
+        </div>
+        @{Html.RenderAction(MVC.Home.ActionNames.Footer, MVC.Home.Name); }
+    </div>
+    <!-- login modal form -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    </div>
+
+    <!-- register modal form -->
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    </div>
+    <script>
+        Home.RatingAndSlider();
+        Public.Routin();
+        Master.JavaScript();
+        AjaxForm.EnableBootstrapStyleValidation();
+        AjaxForm.EnablePostbackValidation();
+       
+        Master.AutoComplete('@Url.Action(MVC.Search.ActionNames.AutoComplete, MVC.Search.Name)');
+    </script>
+    @RenderSection("JavaScript", required: false)
+    @StackExchange.Profiling.MiniProfiler.RenderIncludes()
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+﻿@model ViewModel.Admin.DetailsUserViewModel
+@{
+    ViewBag.Title="جزئیات کاربر";
+}
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CommentsCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CommentsCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrdersCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrdersCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegisterType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegisterType)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("ویرایش", MVC.Admin.User.ActionNames.Edit, MVC.Admin.User.Name, null, new { @class = "btn  btn-success" })
+    @Html.ActionLink("انصراف", MVC.Admin.User.ActionNames.Index, MVC.Admin.User.Name, null, new { @class = "btn  btn-default" })
+</p>

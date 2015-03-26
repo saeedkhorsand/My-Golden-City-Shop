@@ -1,0 +1,65 @@
+﻿
+@using GoldenCityShop.Helpers
+@model IEnumerable<DomainClasses.Entities.Comment>
+
+@{
+    var isInRole = User.IsInRole("admin") || User.IsInRole("user");
+}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong class="panel-title">
+          نظرات
+        </strong>
+    </div>
+    <div class="panel-body">
+        
+    </div>
+    <div class="panel-footer"></div>
+</div>
+
+
+
+@(Html.TreeView(Model)
+    .EmptyContent("<strong class='text-success'>اولین نفری باشید که نظری می دهید!</strong>")
+    .Children(comment => comment.Children)
+    .HtmlAttributes(new { id = "tree" })
+    .ChildrenHtmlAttributes(new { @class = "subItem" })
+    .ItemText(comment => comment.Author.UserName)
+    .ItemTemplate(
+    @<text>
+        @if (item.IsApproved || isInRole)
+        {
+            <div class="comment" id="comment-@item.Id">
+                <strong>
+                   @item.Author.UserName
+                </strong>
+                <div class="comment-detail span8">
+                    <p>
+                        <span>تاریخ: </span>
+                        <span class="comment-date"></span>
+                    </p>
+                </div>
+                <div class="">
+                    @Html.Raw(item.Content)
+                </div>
+                <div class="pull-right">
+                   
+                </div>
+                <div class="pull-left">
+                    @Ajax.ActionLink("پاسخ", MVC.Comment.ActionNames.ReplyComment, MVC.Comment.Name, new { id = ViewBag.PostId, replyId = item.Id }, new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "comment-reply-" + @item.Id, OnSuccess = "CommentReply.slideDown(" + item.Id + ")", OnBegin = "CommentReply.onBegin", LoadingElementDuration = 300, LoadingElementId = "loadingMessage" }, new { @class = "btn btn-success btn-small", rel = "nofollow" })
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div id="comment-reply-@(item.Id)" class="comment-reply-container" style="display: none;"></div>
+        }
+
+
+    </text>)
+)
+<div style="text-align: center;">
+    @Ajax.ActionLink("ارسال دیدگاه", MVC.Comment.ActionNames.AddComment, MVC.Comment.Name, new { id = ViewBag.PostId }, new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "addComment", OnSuccess = "AddComment.slideToggle", LoadingElementDuration = 300, LoadingElementId = "loadingMessage" }, new { @class = "btn btn-success", style = "width:80%;", rel = "nofollow" })
+</div>
+<div style="display: none;" id="addComment">
+</div>

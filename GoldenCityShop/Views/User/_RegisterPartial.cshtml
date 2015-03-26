@@ -1,0 +1,59 @@
+﻿@using CaptchaMvc.HtmlHelpers
+@model ViewModel.RegisterViewModel
+
+<div class="modal-dialog animated bounceInDown">
+    <div class="modal-content">
+        <div class="modal-header alert alert-success text-center">
+            <h5>کاربر گرامی سلام.از اینکه فروشگاه شهر طلایی من را انتخاب کردید ممنونیم</h5>
+        </div>
+
+        <div class="modal-body">
+            @using (Ajax.BeginForm(MVC.User.ActionNames.Register, MVC.User.Name, null, new AjaxOptions {UpdateTargetId = "registerModal", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }, new { @class = "form-horizontal", id = "registerForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3">انسان یاب</label>
+                    <div class="col-md-7">
+                        @Html.MathCaptcha(MVC.Shared.Views._CaptchaPartial)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-10">
+                        <button type="button" data-loading-text="در حال ثبت" onclick="AjaxForm.DisableEnableButton(this,'registerForm')" class="btn btn-sm btn-success">ثبت نام</button>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+    Public.Routin();
+    $(function () {
+        AjaxForm.EnableBootstrapStyleValidation();
+        AjaxForm.EnablePostbackValidation();
+        AjaxForm.EnableAjaxFormvalidate('registerForm');
+    })
+</script>

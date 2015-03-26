@@ -1,0 +1,126 @@
+﻿@using DomainClasses.Enums
+@using GoldenCityShop.Helpers
+@model ViewModel.Admin.Category.FooterViewModel
+<div id="footer">
+    <div class="row">
+        <div class="col-md-3">
+            <h4><i class=""></i>صفحات راهنما</h4>
+            <span class="line"></span>
+            <ul>
+                @foreach (var item in Model.Pages)
+                {
+                    <li>
+                        <a href="@Url.Action(MVC.Page.ActionNames.Index, MVC.Page.Name, new { id = item.Id,name=item.Title.GenerateSlug() })">
+                            @item.Title
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <h4><i class="glyphicon glyphicon-list-alt"></i>منوهای سایت</h4>
+            <span class="line"></span>
+            <ul>
+                <li><a href="/Search/category">ورود به حساب کاربری</a></li>
+                <li><a href="">سبد خرید</a></li>
+                <li><a href="">درباره ما</a></li>
+                <li>
+                    <a href="@Url.Action(MVC.Search.ActionNames.Index, MVC.Search.Name, new {  categoryId = 0,   filter = PSFilter.Beloved})">محصولات محبوب</a>
+                </li>
+                <li><a href="@Url.Action(MVC.Search.ActionNames.Index, MVC.Search.Name, new {  categoryId = 0,   filter = PSFilter.New})">محصولات جدید</a></li>
+                <li><a href="@Url.Action(MVC.Search.ActionNames.Index, MVC.Search.Name, new {  categoryId = 0,   filter = PSFilter.MoreSell})">محصولات پر فروش</a></li>
+                <li>
+                    <a href="@Url.Action(MVC.Search.ActionNames.Index, MVC.Search.Name, new { categoryId = 0, filter = PSFilter.MoreView }) ">محصولات پر بازدید</a>
+                </li>
+                <li><a href="@Url.Action(MVC.Search.ActionNames.Index, MVC.Search.Name, new {  categoryId = 0,   filter = PSFilter.HasDiscount})">محصولات تخفیف دار</a></li>
+                <li><a href="@Url.Action(MVC.Search.ActionNames.Index, MVC.Search.Name, new {  categoryId = 0,   filter = PSFilter.IsInStock})">محصولات موجود</a></li>
+
+                <li><a href="@Url.Action(MVC.Search.ActionNames.Index, MVC.Search.Name, new {  categoryId = 0,   filter = PSFilter.FreeSend})">محصولات با ارسال رایگان</a></li>
+                
+            </ul>
+        </div>
+        <div class="col-md-3">
+            <h4> <a href="#"><i class=" glyphicon glyphicon-earphone"></i>تماس  با ما</a></h4>
+            <span class="line"></span>
+            <address>
+                <i class="glyphicon glyphicon-map-marker"></i>
+                @Model.EditSettingViewModel.Address
+            </address>
+            <p class="tel">
+                <i class="glyphicon glyphicon-phone-alt"></i>
+                <span dir="ltr">@Model.EditSettingViewModel.Tel1</span>
+            </p>
+            <p class="tel">
+                <i class="glyphicon glyphicon-phone-alt"></i>
+                <span dir="ltr">@Model.EditSettingViewModel.Tel2</span>
+            </p>
+            <p class="tel">
+                <i class="glyphicon glyphicon-phone"></i>
+                <span dir="ltr">@Model.EditSettingViewModel.PhoneNumber1</span>
+            </p>
+            <p class="tel">
+                <i class="glyphicon glyphicon-phone"></i>
+                <span dir="ltr">@Model.EditSettingViewModel.PhoneNumber1</span>
+            </p>
+        </div>
+        <div class="col-md-3">
+            <h4><i class="glyphicon glyphicon-envelope"></i>خبرنامه سایت</h4>
+            <span class="line"></span>
+            <p class="text-justify">
+                در خبرنامه سایت عضوشوید و از آخرین تخفیف های سایت با خبر شوید.
+            </p>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="inputEmail3"
+                           class="col-sm-2 control-label">رایانامه</label>
+                    <div class="col-sm-9" dir="ltr">
+                        <input type="email" class="form-control input-sm"
+                               id="inputEmail3" placeholder="name@name.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">تلفن همراه</label>
+                    <div class="col-sm-9" dir="ltr">
+                        <input type="text" class="form-control input-sm"
+                               id="inputPassword3" placeholder="09112223333">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-9">
+                        <button type="submit" class="btn btn-sm btn-success">
+                            <i class="glyphicon glyphicon-send"></i>
+                            ثبت  عضویت
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <a href="#" class="col-md-offset-3 ">
+                <i class="fa fa-facebook-official font-size-30"></i>
+            </a>
+
+            <a href="#" class="marginRight20">
+                <i class="fa fa-google-plus font-size-30"></i>
+            </a>
+
+            <a href="#" class="marginRight20">
+                <i class="fa fa-linkedin font-size-30"></i>
+            </a>
+            <a href="#" class="marginRight20">
+                <i class="fa fa-youtube font-size-30"></i>
+            </a>
+            <a href="#" class="marginRight20">
+                <i class="fa fa-twitter font-size-30"></i>
+            </a>
+            <span class="line"></span>
+            <h5 class="text-center">
+                کلیه حقوق سایت متعلق  است به غلامرضا ربًال و محمد شریفی
+            </h5>
+
+        </div>
+    </div>
+</div>
+

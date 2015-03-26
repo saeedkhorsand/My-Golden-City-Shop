@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ViewModel.Admin.Page.PageViewModel>
+
+
+@Html.AntiForgeryToken()
+<table class="table table-hover table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShowPlace)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LinkImage)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShowPlace)
+            </td>
+            <td>
+                @if (!string.IsNullOrWhiteSpace(item.LinkImage))
+                {
+                    <img src="@item.LinkImage" width="60" height="60" class="img-thumbnail" />
+                }
+            </td>
+            <td class="text-left">
+                @Html.ActionLink("ویرایش", MVC.Admin.Page.ActionNames.Edit, MVC.Admin.Page.Name, new { id = item.Id }, new { @class = "btn btn-sm btn-success" })
+                <span id="row-@item.Id" class="btn btn-danger btn-sm">حذف</span>
+            </td>
+        </tr>
+    }
+
+</table>
+

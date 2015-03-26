@@ -1,0 +1,22 @@
+﻿@using GoldenCityShop.Helpers
+@model IEnumerable<DomainClasses.Entities.Page>
+<section id="help">
+    <div class="panel panel-default">
+        <ul class="list-inline" >
+            @foreach (var page in Model)
+            {
+                <li >
+                    <a href="@Url.Action(MVC.Page.ActionNames.Index, MVC.Page.Name, new { id = page.Id,name=page.Title.GenerateSlug()})" >
+                        <img src="@page.ImagePath?w=40&h=40&mode=crop" height="40" width="40" class="lazyload margin10" alt="@page.Title"/>
+                        <span>
+                            <strong>
+                                @page.Title
+                            </strong>
+                        </span>
+                    </a>
+                </li>
+            }
+        </ul>
+
+    </div>
+</section>

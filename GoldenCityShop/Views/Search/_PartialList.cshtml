@@ -1,0 +1,163 @@
+﻿@model IEnumerable<ViewModel.Admin.Product.ProductSectionViewModel>
+<div class="col-md-9">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well well-sm">
+                <form action="">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <select name="" class="form-control input-sm">
+                                <option value="">انتخاب کنید</option>
+                                <option value="">جدیدترین </option>
+                                <option value="">محبوب ترین </option>
+                                <option value="">تخفیف دار </option>
+                                <option value="">ارسال رایگان</option>
+                                <option value="">پرفروش </option>
+                                <option value="">پر بازدید</option>
+                                <option value="">تاریخ درج</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select name="" class="form-control input-sm">
+                                <option value="Default">20</option>
+                                <option value="">10</option>
+                                <option value="">20</option>
+                                <option value="">30</option>
+                                <option value="">40</option>
+                                <option value="">50</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select name="" class="form-control input-sm">
+                                <option value="Default">صعودی</option>
+                                <option value="">نزولی</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5 ">
+                            <nav class="pull-right">
+                                <ul class="pagination pagination-sm">
+                                    <li>
+                                        <a href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">6</a></li>
+                                    <li><a href="#">7</a></li>
+                                    <li>
+                                        <a href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+
+            <div class="col-md-4">
+                <div class="product-item  thumbnail teaser lazyload" data-expand="-110">
+                    <figure class="">
+                        <a href="#" class="thumbnail">
+
+                            <img src="@item.PrincipleImagePath?w=230&h=210&mode=crop" class="lazyload" height="210" width="230" alt="@item.Name">
+                        </a>
+                    </figure>
+                    <span class="name">
+                        <a href="#" data-toggle="tooltip" data-placement="bottom" title="مشاهده جزئیات محصول">
+                            @item.Name
+                        </a>
+                    </span>
+                    <div class="price">
+                        <span>
+
+                            <strong>
+                                @Html.DisplayFor(a => item.Price) تومان
+                            </strong>
+                            @if (item.TotalDiscount > 0)
+                            {
+                                <label class="label label-success pull-right">12%</label>
+                            }
+
+                        </span>
+
+                    </div>
+                    <div class="footer-prod clearfix">
+                        <input class="rating" data-show-clear="false" data-disabled="true" data-show-caption="false" value="" data-size="xs">
+
+                        <div class="btns btn-group">
+                            <button class="btn btn-xs btn-primary"
+                                    data-toggle="tooltip"
+                                    title="+ لیست مقایسه">
+                                <i class="glyphicon glyphicon-refresh"></i>
+                            </button>
+                            <button class="btn btn-xs btn-primary"
+                                    data-toggle="tooltip"
+                                    title="+ لیست مورد علاقه">
+                                <i class="glyphicon glyphicon-heart"></i>
+                            </button>
+                            <button class="btn btn-xs btn-success"
+                                    data-toggle="tooltip"
+                                    title="+ سبد خرید">
+                                <i class="glyphicon glyphicon-shopping-cart"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well well-sm">
+                <form action="">
+
+                    <div class="row">
+                        <div class="col-md-7"></div>
+                        <div class="col-md-5 ">
+                            <nav class="pull-right">
+                                <ul class="pagination pagination-sm">
+                                    <li>
+                                        <a href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">6</a></li>
+                                    <li><a href="#">7</a></li>
+                                    <li>
+                                        <a href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>

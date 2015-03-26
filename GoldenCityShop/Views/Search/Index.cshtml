@@ -1,0 +1,219 @@
+﻿@using DomainClasses.Entities
+@using GoldenCityShop.Helpers
+@using Lucene.Net.Analysis
+@using PagedList
+@using PagedList.Mvc
+@using ViewModel.Admin.Product
+@model  ViewModel.Admin.Product.SearchViewModel
+
+@{
+    ViewBag.Title = "Index";
+    var searchUrl = Url.Action(MVC.Search.ActionNames.Index, MVC.Search.Name, new
+    {
+        categoryId = Model.CategoryId,
+        filter = Model.Filter,
+        keyword = Model.Term,
+        page = Model.Page,
+        count = Model.Count
+
+    });
+}
+<section id="related-product" class="search-panel">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="com-md-12">
+                <div class="row">
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-sm btn-success pull-left navFont">
+                            لیست مقایسه
+                            @if (Request.IsAuthenticated)
+                            {
+                                <span class="label label-primary" ><strong id="compare">0</strong></span>
+                            }
+                            else
+                            {
+                                <span class="label label-primary"><strong >0</strong></span>
+                            }
+
+                        </button>
+                    </div>
+                  
+
+                    <div class="col-md-10 marginTop5">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input dir="rtl" type="search" name="keyword"
+                                       class="form-control input-sm" value="@Model.Term" placeholder="متن + ENTER" />
+
+                            </div>
+                            <div class="col-md-2">
+                                @Html.DropDownList("filter", ViewBag.Filters as IEnumerable<SelectListItem>, new { @class = "input-sm form-control" })
+                            </div>
+                            <div class="col-md-1">
+                                @Html.DropDownList("count", ViewBag.Counts as IEnumerable<SelectListItem>, new { @class = "input-sm form-control" })
+                            </div>
+
+                            <div class="col-md-6 ">
+                                <nav class="pull-right" id="searchPager">
+                                    @Html.PagedListPager(new StaticPagedList<ProductSectionViewModel>(Model.Products, Model.Page, Model.Count, Model.Total), pageNumber => Url.Action(MVC.Search.ActionNames.Index, MVC.Search.Name, new
+                                    {
+                                        page = pageNumber,
+                                        count = Model.Count,
+                                        filter = Model.Filter,
+                                        keyword = Model.Term,
+                                        categoryId = Model.CategoryId
+
+                                    }), new PagedListRenderOptions
+                                    {
+                                        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                                        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                                        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                        DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                        MaximumPageNumbersToDisplay = 6
+                                    })
+
+                                </nav>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" id="SearchPanel">
+            <div class="row">
+                <div class="col-md-12">
+                    @foreach (var item in Model.Products)
+                    {
+
+                        <div class="col-md-3">
+                            <div class="product-item  thumbnail teaser imganimate lazyload" data-expand="-80">
+                                <figure class="">
+                                    <a href="@Url.Action(MVC.Product.ActionNames.Index,MVC.Product.Name,new{id=item.Id,name=item.Name.GenerateSlug()})" class="thumbnail ">
+                                        <img src="@item.PrincipleImagePath?w=220&h=180&mode=crop" class="lazyload" alt="@item.Name">
+                                    </a>
+                                    @*@if (item.TotalDiscount > 0)
+                                    {
+                                        <span class="prod-top-2 label  label-danger">@item.TotalDiscount% تخفیف</span>
+                                    }
+                                    @if (item.IsFreeShipping)
+                                    {
+                                        <span class="prod-top label  label-primary">ارسال رایگان</span>
+                                    }*@
+
+                                </figure>
+                                <span class="name">
+                                    <a href="@Url.Action(MVC.Product.ActionNames.Index,MVC.Product.Name,new{id=item.Id,name=item.Name.GenerateSlug()})" data-toggle="tooltip" data-placement="bottom" title="مشاهده جزئیات محصول">
+                                        @item.Name
+                                    </a>
+                                </span>
+                                <div class="price">
+                                    <span>
+
+                                        <strong>
+                                            @Html.DisplayFor(a => item.Price) تومان
+                                        </strong>
+
+                                    </span>
+
+                                </div>
+                                <div class="footer-prod clearfix">
+                                    <input class="rating" data-show-clear="false" id="rate-@item.Id" data-show-caption="false" value="@item.AvrageRate" data-size="xs">
+
+                                    <div class="btns btn-group">
+                                        <button class="btn btn-xs btn-primary" id="toCompare-@item.Id"
+                                                data-toggle="tooltip"
+                                                title="+ لیست مقایسه">
+                                            <i class="glyphicon glyphicon-refresh"></i>
+                                        </button>
+                                        <button class="btn btn-xs btn-primary" id="toWish-@item.Id"
+                                                data-toggle="tooltip"
+                                                title="+ لیست مورد علاقه">
+                                            <i class="glyphicon glyphicon-heart"></i>
+                                        </button>
+                                        <button class="btn btn-xs btn-success" id="toCart-@item.Id"
+                                                data-toggle="tooltip"
+                                                title="+ سبد خرید">
+                                            <i class="glyphicon glyphicon-shopping-cart"></i>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+</section>
+
+@section JavaScript
+{
+    <script>
+        $(function () {
+            
+            Customer.Rate();
+            Customer.AddToCart();
+            Customer.AddToWishList();
+            Customer.AddToCompare();
+
+            var $url1 = '/Search-Products/category/@Model.CategoryId/page/@Model.Page/count/@Model.Count/filter/@Model.Filter/keyword/';
+            var $url2 = '/Search-Products/category/@Model.CategoryId/page/1/count/@Model.Count/filter/@Model.Filter/keyword/@Model.Term';
+            var $url3 = '/Search-Products/category/@Model.CategoryId/page/1/count/@Model.Count/filter/@Model.Filter/keyword/@Model.Term';
+
+            $('input[name="keyword"]').keyup(function (e) {
+                var vlu = $(this).val();
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.keyCode == 13 && vlu.length > 1) {
+                    Master.Noty();
+                    setTimeout(function () {
+                        Turbolinks.visit( $url1 + vlu);
+                    }, 2000);
+                    
+                }
+                if (vlu.length == 0) {
+                    Master.Noty();
+                    setTimeout(function () {
+                        Turbolinks.visit( $url1);
+                    }, 2000);
+
+                }
+            });
+
+            $('select[id="filter"]').change(function (e) {
+                e.stopPropagation();
+                var id = $(this).attr('id');
+                Master.Noty();
+                setTimeout(function () {
+                    Turbolinks.visit($url2.replace('@Model.Filter', $('#' + id + ' :selected').val()));
+                }, 2000);
+            });
+            $('select[id="count"]').change(function (e) {
+                e.stopPropagation();
+                var id = $(this).attr('id');
+                Master.Noty();
+                setTimeout(function () {
+                    Turbolinks.visit( $url3.replace('@Model.Count',
+                        $('#' + id + ' :selected').
+                        val()));
+                }, 2000);
+            });
+            $('#searchPager a').click(function (e) {
+                e.preventDefault();
+                var $a = $(this);
+                Master.Noty();
+                setTimeout(function () {
+                    Turbolinks.visit( $a.attr('href'));
+                }, 2000);
+            });
+        });
+    </script>
+}

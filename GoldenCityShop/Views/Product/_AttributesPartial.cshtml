@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ViewModel.Admin.Product.AttributeValueViewModel>
+@if (Model != null && Model.Any())
+{
+
+    <table class="table table-hover table-striped">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <strong class="text-success">
+                        @item.Name:
+                    </strong>
+                    <strong>
+                        @item.Value
+                    </strong>
+                </td>
+
+            </tr>
+        }
+    </table>
+}

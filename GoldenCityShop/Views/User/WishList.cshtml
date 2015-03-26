@@ -1,0 +1,134 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@using ViewModel.Admin.Product
+@model  IEnumerable<ProductSectionViewModel>
+@{
+    ViewBag.Title = "WishList";
+    var postUrl = Url.Action(MVC.Product.ActionNames.RemoveFromWishList, MVC.Product.Name);
+}
+
+@Html.AntiForgeryToken()
+<main class="row" id="user-panel">
+    @{Html.RenderPartial(MVC.User.Views._SidbarMenuPartial);}
+    <section class="col-md-8" id="user-tab-content">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <strong class="panel-title">کالاهای مورد علاقه</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <nav class="pull-right " data-no-turbolink>
+                                @Html.PagedListPager(new StaticPagedList<ProductSectionViewModel>(Model, ViewBag.Page, 10, ViewBag.TotalWishList), pageNumber => Url.Action(MVC.User.ActionNames.WishList, MVC.User.Name, new
+                                    {
+                                        page = pageNumber
+
+                                    }), new PagedListRenderOptions
+                                    {
+                                        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                                        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                                        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                        DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                        MaximumPageNumbersToDisplay = 6
+                                    })
+
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="panel-body">
+
+                <table class="table">
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    <a class="pull-left media-middle imganimate glyphicon thumbnail teaser lazyload" href="#">
+                                        <img src="@item.PrincipleImagePath?w=60&h=60&mode=crop" class="lazyload" alt="@item.Name">
+                                    </a>
+                                </td>
+                                <td>
+                                    <span class="name">
+                                        <a href="#" data-toggle="tooltip" data-placement="top" title="مشاهده جزئیات محصول">
+                                            @item.Name
+                                        </a>
+                                    </span>
+                                </td>
+                                <td>
+                                    <strong>
+                                        @Html.DisplayFor(a => item.Price) تومان
+                                    </strong>
+                                </td>
+                                <td>
+                                    <input class="rating" id="rate-@item.Id" data-show-clear="false" data-show-caption="false" value="@item.AvrageRate" data-size="xs">
+                                </td>
+                                <td class="pull-right">
+                                    <div class="btns btn-group">
+                                        <button class="btn btn-xs btn-primary" id="toCompare-@item.Id"
+                                                data-toggle="tooltip"
+                                                title="+ لیست مقایسه">
+                                            <i class="glyphicon glyphicon-refresh"></i>
+                                        </button>
+
+                                        <button class="btn btn-xs btn-success" id="toCart-@item.Id"
+                                                data-toggle="tooltip"
+                                                title="+ سبد خرید">
+                                            <i class="glyphicon glyphicon-shopping-cart"></i>
+                                        </button>
+                                        <button class="btn btn-xs btn-danger" id="row-@item.Id"
+                                                data-toggle="tooltip"
+                                                title="حذف">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="panel-footer"></div>
+        </div>
+    </section>
+</main>
+@section JavaScript
+{
+    <script>
+        $(function () {
+            $(document).on('click', "button[id^='row']", (function (e) {
+                e.stopPropagation();
+                var span = $(this);
+                var id = span.attr('id').replace('row-', '');
+                swal({
+                    title: "آیا مطمئن هستید؟",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn btn-md btn-danger",
+                    confirmButtonText: "بله",
+                    cancelButtonText: "انصراف",
+                    closeOnConfirm: false
+                },
+                    function (confirmed) {
+                        if (confirmed) {
+                            span.parent().parent().parent().MVCDeleteRow({
+                                'postUrl': '@postUrl',
+                                'id': id
+                            });
+                            swal("", "رکورد مورد نظر حذف شد", "success");
+                        }
+                    });
+            }));
+            Public.Routin();
+            Customer.Rate();
+            Customer.AddToCart();
+            Customer.AddToCompare();
+        });
+    </script>
+}

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<DomainClasses.Entities.SlideShow>
+
+@{
+    ViewBag.Title = "لیست تصاویر اسلاید شو";
+    var postUrl = Url.Action(MVC.Admin.Setting.ActionNames.DeleteSlide, MVC.Admin.Setting.Name);
+}
+@Html.AntiForgeryToken()
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <tr>
+            <th>
+                عنوان
+            </th>
+            <th class="text-center">
+                تصویر
+            </th>
+            <th>
+                متن جایگزین تصویر
+            </th>
+            <th>
+                آدرس
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td class="text-center">
+                    <img src="@item.ImagePath" class="img-circle" alt="@item.ImageAltText" width="60" height="60">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageAltText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Link)
+                </td>
+                <td class="text-left">
+                    @Html.ActionLink("ویرایش", MVC.Admin.Setting.ActionNames.EditSlide, MVC.Admin.Setting.Name, new { id = item.Id }, new { @class = "btn btn-success btn-sm" })
+                    <span id="row-@item.Id" class="btn btn-danger btn-sm">حذف</span>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>
+@section JavaScript
+{
+    <script>
+        $(function () {
+            $('span[id^="row"]').click(function (e) {
+                e.stopPropagation();
+                var span = $(this);
+                var id = span.attr('id').replace('row-', '');
+                swal({
+                    title: "آیا مطمئن هستید؟",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn btn-md btn-danger",
+                    confirmButtonText: "بله",
+                    cancelButtonText: "انصراف",
+                    closeOnConfirm: false
+                },
+                    function (confirmed) {
+                        if (confirmed) {
+                            span.parent().parent().MVCDeleteRow({
+                                'postUrl': '@postUrl',
+                                'id': id
+                            });
+                            swal("", "رکورد مورد نظر حذف شد", "success");
+                        }
+                    });
+            });
+        });
+
+
+    </script>
+}

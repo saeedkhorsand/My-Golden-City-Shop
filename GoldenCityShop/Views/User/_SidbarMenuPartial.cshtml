@@ -1,0 +1,32 @@
+﻿
+<div class="col-md-1"></div>
+<aside class="col-md-2" id="user-options-tab">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong class="panel-title">پنل کاربری</strong>
+        </div>
+        <div class="panel-body">
+
+            <div class="list-group" data-no-turbolink>
+                <a href="@Url.Action(MVC.User.ActionNames.Account, MVC.User.Name)" class="list-group-item">مشخصات کاربری</a>
+                <a href="@Url.Action(MVC.User.ActionNames.Orders, MVC.User.Name)" class="list-group-item">سفارشات</a>
+                <a href="@Url.Action(MVC.User.ActionNames.Comments, MVC.User.Name)" class="list-group-item">نظرات من</a>
+                <a href="@Url.Action(MVC.User.ActionNames.WishList, MVC.User.Name,new{page=1})" class="list-group-item">علاقه مندی ها</a>
+                <a href="#" class="list-group-item">تماس با مدیریت</a>
+            </div>
+        </div>
+        <div class="panel-footer"></div>
+    </div>
+</aside>
+<script>
+    $(function () {
+        $("#user-options-tab .panel-body>.list-group>a").each(function () {
+            var $a = $(this);
+            var href = $a.attr("href");
+            if (href && (location.pathname.toLowerCase().split('/')[2] === href.toLowerCase().split('/')[2])) {
+                //صفحه جاری را یافتیم
+                $a.addClass("active");
+            }
+        });
+    });
+</script>

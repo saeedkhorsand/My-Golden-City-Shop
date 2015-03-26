@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "ارسال فایل";
+}
+
+@section css
+{
+    @Styles.Render("~/fileinp/css")
+}
+<div class="row">
+    <div class="col-lg-12">
+        <a href="@Url.Action(MVC.Admin.Folder.ActionNames.Pictures, MVC.Admin.Folder.Name, new { folderId = ViewBag.FolderId })" class="btn btn-info">لیست تصاویر</a>
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @using (Html.BeginForm(MVC.Admin.Folder.ActionNames.AddPictureToFolder, MVC.Admin.Folder.Name, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" value="@ViewBag.FolderId" />
+            <div class="col-md-12">
+                <input id="img" name="files" multiple="true" type="file" accept="image/*" />
+            </div>
+
+        }
+    </div>
+</div>
+
+
+@section JavaScript
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/fileinp/js")
+    <script>
+        Admin.OneImageUpload("img")
+    </script>
+}

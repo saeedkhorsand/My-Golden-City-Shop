@@ -1,0 +1,58 @@
+﻿
+@model  ViewModel.LoginViewModel
+
+<div class="modal-dialog animated bounceInDown">
+    <div class="modal-content">
+        <div class="modal-header alert alert-success text-center">
+            <h5>کاربر گرامی سلام به فروشگاه شهر طلایی من خوش آمدید</h5>
+        </div>
+        <div class="modal-body">
+            @using (Ajax.BeginForm(MVC.User.ActionNames.Login, MVC.User.Name,null, new AjaxOptions {UpdateTargetId = "loginModal", InsertionMode = InsertionMode.Replace, HttpMethod = "POST"}, new { @class = "form-horizontal", id = "loginForm" }))
+            {
+               
+                @Html.AntiForgeryToken()
+
+                @Html.Hidden("returnUrl", ViewBag.ReturnUrl as string)
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-7">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-8">
+                        <button type="button" data-loading-text="در حال ورود" onclick="AjaxForm.DisableEnableButton(this,'loginForm')" class="btn btn-sm btn-success" >ورود</button>
+                        
+                        @Ajax.ActionLink("فراموشی کد ورود", MVC.User.ActionNames.ForgetPassword, MVC.User.Name, null, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "loginModal" }, new { @class = "btn btn-sm btn-primary", rel = "nofollow" })
+                       
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script>
+    Public.Routin();
+    $(function () {
+        AjaxForm.EnableBootstrapStyleValidation();
+        AjaxForm.EnablePostbackValidation();
+        AjaxForm.EnableAjaxFormvalidate('loginForm');
+    })
+</script>

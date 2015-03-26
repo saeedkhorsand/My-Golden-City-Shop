@@ -1,0 +1,49 @@
+﻿@model IEnumerable<DomainClasses.Entities.Category>
+<nav class="navbar yamm navbar-default" id="categoryMenu" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    @foreach (var firstLevel in Model.OrderBy(a => a.DisplayOrder))
+                    {
+                        <li class="dropdown yamm-fw">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                @firstLevel.Name <span class="caret"></span>
+                            </a>
+                            @if (firstLevel.Children != null && firstLevel.Children.Any())
+                            {
+                                <ul class="dropdown-menu l-3" role="menu">
+                                    <li>
+                                        <div class="yamm-content ">
+                                            <div class="row">
+                                                <div class="col-md-12">
+
+                                                    @foreach (var secondLevel in firstLevel.Children.OrderBy(a => a.DisplayOrder))
+                                                    {
+                                                        <div class="col-md-3">
+                                                            
+                                                            <a class="text-success" href="@Url.Action(MVC.Search.ActionNames.Index, MVC.Search.Name, new {categoryId = secondLevel.Id})">
+                                                                @secondLevel.Name
+                                                            </a>
+
+                                                        </div>
+
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+
+                            }
+                        </li>
+
+                    }
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</nav>

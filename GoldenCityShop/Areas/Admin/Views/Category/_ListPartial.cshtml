@@ -1,0 +1,51 @@
+﻿@using ViewModel.Admin
+@model IEnumerable<ShowCatetoryViewModel>
+@Html.AntiForgeryToken()
+<div class="row">
+
+    <div class="table-responsive col-lg-12">
+        <table class="table table-hover table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.DiscountPercent)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.DiscountPercent)
+                    </td>
+                    <td class="text-left">
+                        @Html.ActionLink("ویرایش", MVC.Admin.Category.ActionNames.Edit, MVC.Admin.Category.Name, new { id = item.Id }, new { @class = "btn btn-sm btn-success" })
+                        <span id="row-@item.Id" class="btn btn-sm btn-danger">حذف</span>
+
+                        @Html.ActionLink("افزودن خصوسیات", MVC.Admin.Category.ActionNames.AddAttribute, MVC.Admin.Category.Name, new { categoryId = item.Id }, new { @class = "btn btn-sm btn-primary" })
+                        @Html.ActionLink("خصوصیات", MVC.Admin.Category.ActionNames.AttributeList, MVC.Admin.Category.Name, new { categoryId = item.Id }, new { @class = "btn btn-sm btn-primary" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+@Html.PagedListPager(new StaticPagedList<ShowCatetoryViewModel>(Model, ViewBag.PageNumber, 10, ViewBag.TotalCategories), pageNumber => Url.Action(MVC.Admin.Category.ActionNames.List, MVC.Admin.Category.Name, new
+                {
+                    term = ViewBag.Term,
+                    page = pageNumber
+                }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(PagedListRenderOptions.ClassicPlusFirstAndLast, new AjaxOptions { AllowCache = false, HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "categoriesList" }))
+
+
+<script>
+    Public.Routin();
+</script>

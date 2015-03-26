@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DomainClasses.Entities.SlideShow>
+
+
+<div id="siteSlideShow" class="slider-pro">
+
+    <div class="sp-slides">
+        @foreach (var item in Model)
+        {
+            <div class="sp-slide">
+                <a href="@item.Link">
+                    <img class="sp-image lazyload" src="@item.ImagePath?w=860&h=315&mode=crop" height="315" width="860" alt="@item.ImageAltText" />
+                </a>
+
+                <p class="sp-layer sp-white sp-padding hide-small-screen"
+                   dir="rtl"
+                   data-position="@item.Position" data-horizontal="@item.DataHorizontal" data-vertical="@item.DataVertical"
+                   data-show-transition="@item.ShowTransition" data-show-delay="600" data-hide-transition="@item.HideTransition">
+                    <span class="hide-medium-screen wYakn">
+                        @item.Description
+                    </span>
+                </p>
+
+            </div>
+        }
+    </div>
+    <div class="sp-thumbnails">
+        @foreach (var item in Model)
+        {
+            <div class="sp-thumbnail">
+                <div class="sp-thumbnail-title wYakn">
+                    <strong>
+                        @item.Title
+                    </strong>
+                </div>
+            </div>
+        }
+    </div>
+</div>

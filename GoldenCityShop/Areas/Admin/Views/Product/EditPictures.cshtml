@@ -1,0 +1,39 @@
+﻿@model IEnumerable<DomainClasses.Entities.ProductImage>
+@{
+    ViewBag.Title = "ویرایش تصاویر";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            for (int i = 0; i < Model.Count(); i++)
+            {
+
+                <text>
+                    <input type="hidden" name="[@i].ProductId" value="@Model.ElementAt(i).ProductId" />
+                    <input type="hidden" name="[@i].Id" value="@Model.ElementAt(i).Id" />
+                    <div class="form-group">
+                        @{ var index = i + 1;}
+                        <label for="[@i].Path" class="control-label col-md-1">تصویر @index</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" value="@Model.ElementAt(i).Path" id="[@i].Path" name="[@i].Path" />
+                        </div><a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-success="LightBox.onSuccess" data-ajax-update="#lightBox" data-toggle="modal"
+                                 href="@Url.Action(MVC.Admin.Folder.ActionNames.Index, MVC.Admin.Folder.Name)?elementId=[@i].Path" rel="nofollow" role="button">
+                            <i class="glyphicon glyphicon-picture font-size-30"></i>
+                        </a>
+                    </div>
+
+                </text>
+
+            }
+            <div class="form-group">
+                <div class="col-md-offset-1 col-md-5">
+                    <input type="submit" value="ذخیره تغییرات" class="btn btn-success" />
+                </div>
+            </div>
+        }
+    </div>
+</div>

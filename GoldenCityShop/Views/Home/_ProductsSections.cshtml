@@ -1,0 +1,71 @@
+﻿@using GoldenCityShop.Helpers
+@model IEnumerable<ViewModel.Admin.Product.ProductSectionViewModel>
+@{
+    var check = 2;
+}
+<div class="panel panel-default">
+    <div class="panel-heading sidebar-header">
+        <span class="bdred">
+            <i class="@ViewBag.SectionIcon"></i>
+            <strong>
+                @ViewBag.SectionName
+            </strong>
+        </span>
+    </div>
+    <div class="panel-body">
+        @foreach (var item in Model)
+        {
+
+            <div class="media">
+                <a class="pull-left media-middle imganimate glyphicon thumbnail teaser lazyload"
+                   data-expand="@(ViewBag.Teaser?"-30":"")" href="@Url.Action(MVC.Product.ActionNames.Index,MVC.Product.Name,new{id=item.Id,name=item.Name.GenerateSlug()})">
+                    <img src="@item.PrincipleImagePath?w=80&h=80&mode=crop" class="lazyload" alt="@item.Name">
+                </a>
+                <div class="media-body">
+                    <div class="pull-left">
+                        <div>
+                            <h5 class="media-heading">
+                                <i class="@ViewBag.ProductIcon"></i>
+                                <a href="@Url.Action(MVC.Product.ActionNames.Index,MVC.Product.Name,new{id=item.Id,name=item.Name.GenerateSlug()})" data-toggle="tooltip" data-placement="top" title="مشاهده جزئیات محصول">
+                                    @item.Name
+                                </a>
+                            </h5>
+                        </div>
+
+                        <div>
+                            <small>
+                                <strong>
+                                    @Html.DisplayFor(a => item.Price)  تومان
+                                </strong>
+                            </small>
+                            <br>
+                            <small>
+                                    <input class="rating" data-readonly="true" data-show-clear="false" data-show-caption="false" value="@item.AvrageRate" data-size="xs">
+                                    
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            if (check > 0)
+            {
+                check--;
+                <hr>
+            }
+        }
+    </div>
+    <div class="panel-footer">
+        <i class="glyphicon glyphicon-th-list"></i>
+        <a href="@Url.Action(MVC.Search.ActionNames.Index, MVC.Search.Name, new { categoryId = 0, filter =ViewBag.SectionFilter })">
+
+            <strong>
+                ادامه محصولات
+            </strong>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+﻿.prod-set>div{
+ 	padding: 10px 0;
+}
+.prod-set .dl-horizontal{
+	margin: 0;
+	padding: 0;
+}
+.prod-set input{
+	margin: 1px 0;	
+}
+
+.name{
+	padding: 5px;
+	display: inherit;
+}
+.price{
+	width: 90%;
+}
+.titleHeader {
+    padding-bottom: -10px;
+}
+.titleHeader span{
+	background: #fff;
+	padding-left: 5px;
+}
+.price  span{
+	background: #fff;
+	padding-left: 5px;
+}
+.product-item{
+	padding: 10px;
+	background: #fff;
+}
+.rate,.btns{
+	padding: 10px;
+}
+.footer-prod{
+	margin-top: 10px;	
+}
+.pagination{
+	margin: 0 0 !important;
+}
+
+.pagination a{
+	color: white;	
+}
+.filters{
+	background-color: #f0f0f0;
+	padding: 5px 10px;
+	border-top: 1px dotted #b6b6b6;
+	border-bottom: 1px dotted #b6b6b6;
+	margin-bottom: 10px;
+}
+.search-panel{
+	width:90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+input[type="radio"], input[type="checkbox"]
+{
+	margin: -3px 0 0;	
+}
+.glyphicon-search
+{
+	margin-left: 5px !important;	
+}
+.pagination-sm {
+    font-size: 1.2em !important;
+}
+

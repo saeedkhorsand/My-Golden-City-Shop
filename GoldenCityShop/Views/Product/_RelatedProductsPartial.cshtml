@@ -1,0 +1,42 @@
+﻿@using DomainClasses.Enums
+@using GoldenCityShop.Helpers
+@model IEnumerable<ViewModel.Admin.Product.ProductSearchResultViewModel>
+@if (Model != null && Model.Any())
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="bdred">
+                <strong class="panel-title">
+                    محصولات مرتبط
+                </strong>
+            </span>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-2">
+                            <a class="pull-left media-middle imganimate glyphicon thumbnail teaser lazyload"
+                               data-toggle="tooltip" data-placement="top" title="@item.Name"
+                               data-expand="-20" href="@Url.Action(MVC.Product.ActionNames.Index,MVC.Product.Name,new{id=item.Id,name=item.Name.GenerateSlug()})">
+                                <img src="@item.ImagePath?w=100&h=100&mode=crop" class="lazyload" alt="@item.Name">
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <i class="glyphicon glyphicon-th-list"></i>
+            <a href="@Url.Action(MVC.Search.ActionNames.Index, MVC.Search.Name, new { categoryId =0, filter =PSFilter.All })">
+
+                <strong>
+                    ادامه محصولات
+                </strong>
+            </a>
+        </div>
+    </div>
+
+}

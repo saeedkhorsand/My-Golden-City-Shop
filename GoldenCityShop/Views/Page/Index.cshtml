@@ -1,0 +1,23 @@
+﻿
+@model DomainClasses.Entities.Page
+@{
+    ViewBag.Title = Model.Title;
+}
+    <section id="pageCustom">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>
+                    @Model.Title
+                </strong>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-10">
+                    <main>
+                        @Html.Raw(Model.Content)
+                    </main>
+
+                </div>
+            </div>
+
+        </div>
+    </section>

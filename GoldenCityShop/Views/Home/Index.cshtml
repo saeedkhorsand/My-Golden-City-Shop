@@ -1,0 +1,32 @@
+﻿<main>
+    <div class="row" id="main">
+
+        <aside class="col-md-3 marginRight20">
+            @{Html.RenderAction(MVC.Home.ActionNames.NewProducts, MVC.Home.Name); }
+            @{Html.RenderAction(MVC.Home.ActionNames.BelovedProducts, MVC.Home.Name); }
+            @{Html.RenderAction(MVC.Home.ActionNames.MoreViewedProducts, MVC.Home.Name); }
+
+        </aside>
+        <div class="col-md-8 marginRight20">
+            <section id="slide-show">
+                <div class="panel panel-default" id="slideshowPanel">
+                    @{ Html.RenderAction(MVC.Home.ActionNames.SlideShow, MVC.Home.Name); }
+                </div>
+            </section>
+            @{Html.RenderAction(MVC.Home.ActionNames.ContentPages, MVC.Home.Name);}
+            @{Html.RenderAction(MVC.Home.ActionNames.MoreSellProducts, MVC.Home.Name); }
+        </div>
+    </div>
+</main>
+
+@section JavaScript
+{
+    <script>
+        $(function() {
+            Customer.Rate();
+            Customer.AddToCart();
+            Customer.AddToWishList();
+            Customer.AddToCompare();
+        });
+    </script>
+}

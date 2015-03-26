@@ -1,0 +1,6 @@
+﻿@using DomainClasses.Enums
+@{
+    var items = typeof(Order).GetItems((int?)Model);
+}
+
+@Html.DropDownList("", items, new { @class = "form-control" })

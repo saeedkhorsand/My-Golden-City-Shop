@@ -1,0 +1,29 @@
+﻿@model IEnumerable<DomainClasses.Entities.Folder>
+
+<div class="modal-dialog modal-lg animated bounceInDown">
+    <div class="modal-content">
+        <div class="modal-header alert alert-info text-center">
+            <h4>تصویر خود را انتخاب کنید</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-2">
+                            <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace"
+                               data-ajax-update="#lightBox" href="@Url.Action(MVC.Admin.Folder.ActionNames.Pictures, MVC.Admin.Folder.Name, new { folderId = item.Id, elementId = ViewBag.ElementId })" rel="nofollow">
+                              
+                                <i class="glyphicon glyphicon-folder-open font-size-70"></i>
+                            </a>
+                            <h5>@item.Name</h5>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal">تایید</button>
+        </div>
+    </div>
+</div>

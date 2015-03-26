@@ -1,0 +1,125 @@
+﻿<div class="col-sm-3 col-md-3" id="sidebar">
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                        <span class="glyphicon glyphicon-th">
+                        </span><strong>صفحات</strong>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                @Html.ActionLink("لیست", MVC.Admin.Page.ActionNames.Index, MVC.Admin.Page.Name)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.ActionLink("جدید", MVC.Admin.Page.ActionNames.Create, MVC.Admin.Page.Name)
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                        <span class="glyphicon glyphicon-th">
+                        </span><strong>گروه ها</strong>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                @Html.ActionLink("جدید", MVC.Admin.Category.ActionNames.Create, MVC.Admin.Category.Name)
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.ActionLink("لیست", MVC.Admin.Category.ActionNames.Index, MVC.Admin.Category.Name)
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                        <span class="glyphicon glyphicon-user">
+                        </span><strong>
+                            کاربران
+                        </strong>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <td>@Html.ActionLink("لیست", MVC.Admin.User.ActionNames.Index, MVC.Admin.User.Name)</td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.ActionLink("جدید", MVC.Admin.User.ActionNames.Add, MVC.Admin.User.Name)
+
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                        <span class="glyphicon glyphicon-th">
+                        </span><strong>مدیریت محتوا</strong>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse4" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                @Html.ActionLink("ویرایش اطلاعات", MVC.Admin.Setting.ActionNames.Edit, MVC.Admin.Setting.Name)
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.ActionLink("ارسال تصویر", MVC.Admin.Picture.ActionNames.Create, MVC.Admin.Picture.Name)
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.ActionLink("لیست تصاویر", MVC.Admin.Picture.ActionNames.Index, MVC.Admin.Picture.Name)
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

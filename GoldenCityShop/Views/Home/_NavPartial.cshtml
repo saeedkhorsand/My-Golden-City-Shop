@@ -1,0 +1,96 @@
+﻿@using GoldenCityShop.Helpers
+@using System.Web.Mvc.Ajax
+
+
+<div class="row">
+
+    <div id="top-area" class="col-md-12">
+       
+        <div class="col-md-1">
+            <button type="button"  class="btn btn-sm btn-success navFont">
+                <i class="glyphicon glyphicon-shopping-cart"></i>
+                سبد خرید
+                @if (Request.IsAuthenticated)
+                {
+                    <span class="label label-primary" ><strong id="shoppingCart">0</strong></span>
+                }
+                else
+                {
+                    <span class="label label-primary"><strong>0</strong></span>
+                }
+              
+            </button>
+        </div>
+       
+        <div class="col-md-3" id="authenticationMenu">
+            <div class="input-group inline-form" id="loginRegisterDiv" data-no-turbolink>
+                @if (!Request.IsAuthenticated)
+                {
+                    <a data-ajax="true"  data-ajax-method="GET" data-ajax-mode="replace"  data-ajax-success="LoginForm.onSuccess"  data-ajax-update="#loginModal" data-i-logon-link="true" data-toggle="modal" href="/customer/login?returnUrl=@ViewBag.ReturnUrl" id="loginMenuBtn" rel="nofollow" role="button">
+                        <i class="glyphicon glyphicon-lock"></i>
+                        <strong>
+                            ورود به حساب کاربری
+                        </strong>
+                    </a>
+                    <text>|</text>
+
+                    <a data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-success="RegisterForm.onSuccess" data-ajax-update="#registerModal"  data-toggle="modal" href="/customer/register" id="registerMenuBtn" rel="nofollow" role="button">
+                        <i class="glyphicon glyphicon-user">
+
+                        </i>
+                        <strong>ثبت نام</strong>
+
+                    </a>
+                }
+                else
+                {
+                    using (Html.BeginForm(MVC.User.ActionNames.LogOut, MVC.User.Name, FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <a href="javascript:document.getElementById('logoutForm').submit()">
+                            <i class="fa fa-sign-out"></i>
+                            <strong>
+                                خروج
+                            </strong>
+                        </a>
+                        if (User.IsInRole("admin"))
+                        {
+                            <text>|</text>
+                            <a href="/admin/home">
+                                <i class="fa fa-cog"></i>
+                                <strong>
+                                    پنل مدیریت
+                                </strong>
+                            </a>
+                        }
+                        else
+                        {
+                            <text>|</text>
+                            <a href="/">
+                                <i class="fa fa-cog"></i>
+                                <strong>
+                                    پنل کاربری
+                                </strong>
+                            </a>
+                        }
+                    }
+
+                }
+
+            </div>
+        </div>
+        <div dir="ltr" class="col-md-4 input-group inline-form">
+            <span class="input-group-btn ">
+                <button class="btn btn-sm btn-default white-bg top-5" type="button">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </span>
+            <input dir="rtl" type="search" id="term"
+                   class="form-control input-md input-sm" placeholder="دنبال چیزی می گردید؟!">
+        </div>
+        <div id="masterSearch" hidden="hidden"></div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+
