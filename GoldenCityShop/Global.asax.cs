@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Data.Entity;
+using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
@@ -28,14 +29,14 @@ namespace GoldenCityShop
                 FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
                 RouteConfig.RegisterRoutes(RouteTable.Routes);
                 BundleConfig.RegisterBundles(BundleTable.Bundles);
-                //
+
                 MvcHandler.DisableMvcResponseHeader = true;
                 ViewEngines.Engines.Clear();
                 ViewEngines.Engines.Add(new RazorViewEngine());
                 CaptchaUtils.CaptchaManager.StorageProvider = new CookieStorageProvider();
                 SetDbInitializer();
                 ControllerBuilder.Current.SetControllerFactory(new StructureMapControllerFactory());
-               LuceneProducts.CreateIndexes(SampleObjectFactory.Container.GetInstance<IProductService>().GetAllForAddLucene());
+                LuceneProducts.CreateIndexes(SampleObjectFactory.Container.GetInstance<IProductService>().GetAllForAddLucene());
             }
             catch
             {
@@ -47,6 +48,27 @@ namespace GoldenCityShop
         #endregion
 
         #region Private Members
+
+        private bool ShouldIgnoreRequest()
+        {
+            string[] reservedPath =
+            {
+                "/__browserLink",
+                "/img",
+                "/fonts",
+                "/Scripts",
+                "/Content"
+            };
+
+            var rawUrl = Context.Request.RawUrl;
+            if (reservedPath.Any(path => rawUrl.StartsWith(path, StringComparison.OrdinalIgnoreCase)))
+            {
+                return true;
+            }
+
+            return BundleTable.Bundles.Select(bundle => bundle.Path.TrimStart('~'))
+                      .Any(bundlePath => rawUrl.StartsWith(bundlePath, StringComparison.OrdinalIgnoreCase));
+        }
         public class StructureMapControllerFactory : DefaultControllerFactory
         {
             protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
@@ -89,6 +111,8 @@ namespace GoldenCityShop
         #region Application_AuthenticateRequest
         protected void Application_AuthenticateRequest(Object sender, EventArgs e)
         {
+            if (ShouldIgnoreRequest()) return;
+
             if (Context.User == null)
                 return;
 
