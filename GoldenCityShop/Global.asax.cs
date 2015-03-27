@@ -57,7 +57,8 @@ namespace GoldenCityShop
                 "/img",
                 "/fonts",
                 "/Scripts",
-                "/Content"
+                "/Content",
+                "/Uploads"
             };
 
             var rawUrl = Context.Request.RawUrl;
