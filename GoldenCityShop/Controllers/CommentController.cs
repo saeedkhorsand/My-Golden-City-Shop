@@ -7,7 +7,7 @@ namespace GoldenCityShop.Controllers
     public partial class CommentController : Controller
     {
         #region Fields
-
+        private readonly string test;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICommentService _commentService;
         #endregion
